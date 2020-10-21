@@ -64,9 +64,6 @@ module.exports = {
 						errors: "User Not Found."
 					});
 				}
-				return res.send({
-					user
-				})
 
 				var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
 				if (!passwordIsValid) {
@@ -78,12 +75,19 @@ module.exports = {
 						errors: "Invalid Password!"
 					});
 				}
-				
 				var token = 'Bearer ' + jwt.sign({
 					id: user.id
 				}, config.secret, {
 					expiresIn: 86400 //24h expired
 				});
+
+				if(!token){
+					return res.send({
+						auth:false,
+						id:req.body.id,
+						message: "Token failed Created"
+					})
+				}
 
 				res.status(200).send({
 					auth: true,

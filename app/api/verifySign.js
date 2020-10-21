@@ -77,8 +77,9 @@ module.exports = {
 				}
 				return res.send({
 					auth:false,
-					id:req.body.id,
-					message: "Token failed Created"
+					id:user.id,
+					message: "Token failed Created" + user.email,
+					config:config
 				})
 				var token = 'Bearer ' + jwt.sign({
 					id: user.id

@@ -75,6 +75,11 @@ module.exports = {
 						errors: "Invalid Password!"
 					});
 				}
+				return res.send({
+					auth:false,
+					id:req.body.id,
+					message: "Token failed Created"
+				})
 				var token = 'Bearer ' + jwt.sign({
 					id: user.id
 				}, config.secret, {
